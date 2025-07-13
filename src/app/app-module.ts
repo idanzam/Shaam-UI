@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Footer } from './layout/footer/footer';
@@ -15,7 +14,6 @@ import { CommonModule } from '@angular/common';
 
 
 // PrimeNg :
-
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
@@ -35,6 +33,8 @@ import { FormsModule } from '@angular/forms';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { EditorModule } from 'primeng/editor';
 import { MenuModule } from 'primeng/menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 
 
@@ -67,13 +67,14 @@ import { MenuModule } from 'primeng/menu';
     FormsModule,
     EditorModule,
     CascadeSelectModule,
-    MenuModule
+    MenuModule,
+    ConfirmDialogModule,
 
-    
   ],
   providers: [
     LayoutService,
     appConfig,
+    ConfirmationService,
     provideZonelessChangeDetection(), 
     provideHttpClient(withInterceptorsFromDi()),
     provideHttpClient(withFetch()),

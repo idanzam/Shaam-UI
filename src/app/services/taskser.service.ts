@@ -31,15 +31,22 @@ export class TaskService {
   }
 
   update(task: Task) {
-    this.http.put(`${this.api}/${task.id}`, task).subscribe({
-      next: () => {
-        this.tasks.update((list) =>
-          list.map((t) => (t.id === task.id ? task : t))
-        );
-      },
-      error: (err) => console.error('Update error', err)
-    });
-  }
+  const { _id, ...cleanTask } = task as any;
+  console.log('🔁 Updating task:', task.id, cleanTask);
+  this.http.put<Task>(`${this.api}/${task.id}`, cleanTask).subscribe({
+    next: (updated) => {
+      if (!updated || !updated.id) {
+        console.error('❌ Update failed: invalid response', updated);
+        return;
+      }
+
+      this.tasks.update((list) =>
+        list.map((t) => (t.id === task.id ? updated : t))
+      );
+    },
+    error: (err) => console.error('Update error', err)
+  });
+}
 
   delete(id: number) {
     this.http.delete(`${this.api}/${id}`).subscribe({

@@ -1,15 +1,11 @@
-    <p-menubar [model]="items">
-    
+    <p-menubar [model]="items" dir="rtl" class="!border-none">
+        <ng-template #start>
+            <img src="logo-shaam.png" width="200" class="bg-primary p-2 rounded-xl"/>
+        </ng-template>
          <ng-template #end>
-            <!-- <div class="flex items-center gap-2">
-                <input type="text" pInputText placeholder="Search" class="w-36" />
-                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
-            </div> -->
-           
              <p-button type="button" class="layout-topbar-action" (click)="toggleDarkMode()" variant="text" rounded="true" raised="true">
                     <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
              </p-button>
         </ng-template>
-    
     </p-menubar>
 
