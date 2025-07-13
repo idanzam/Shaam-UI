@@ -1,0 +1,122 @@
+<div class="main">
+    <p-card class="!inset-shadow-sm !inset-shadow-blue-500 shadow-2xl">
+    <span class="flex justify-center items-center gap-3" dir="rtl">
+        <p class="text-4xl text-center text-primary ">מערכת לניהול משימות</p>
+        <span class="pi pi-list" style="font-size: 2rem"></span>
+
+    </span>
+    <p-divider />
+       <p-table [value]="tasks()" [tableStyle]="{ 'min-width': '50rem' }" dir="rtl"
+                [headerTemplate]="header" 
+                [bodyTemplate]="body"
+                [captionTemplate]="caption"
+                [resizableColumns]="true"
+                #dt1
+                [globalFilterFields]="['title', 'description', 'code']" 
+                showGridlines
+                direction="rtl"
+        >
+         <ng-template #caption>
+            <span class="flex justify-between ">
+                <span class="flex">
+                    <p-button label="ניקוי" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" />
+                    <p-iconfield iconPosition="left" class="ml-auto">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="חיפוש משימה" />
+                    </p-iconfield>
+                </span>
+                <span class="flex gap-3">
+                    <p-button icon="pi pi-plus" label="הוספת משימה" (click)="showDialog()" />
+                    <p-button icon="pi pi-refresh" rounded raised label="רענן" />
+                    <p-dialog [(visible)]="visible" 
+                              [modal]="true" 
+                              [style]="{ width: '35rem' }"  
+                              maskStyleClass="backdrop-blur-sm" 
+                              dismissableMask="true" 
+                              closable="false"
+                              >
+                        <ng-template #header>
+                            <div class="flex items-center gap-2 flex-col">
+                                <span class="flex justify-center">
+                                    <img src="logo-shaam.png" width="250" class="bg-primary p-2 rounded-xl"/>
+                                </span>
+                                 <span class="font-bold whitespace-nowrap text-center text-primary text-2xl">מערכת שע"מ</span>
+                                <span class="font-bold whitespace-nowrap text-center">הוספת משימה</span>
+                            </div>
+                        </ng-template>
+                        <span class="text-surface-500 dark:text-surface-400 block mb-8">נא הוסף משימה</span>
+                        <div class="flex items-center gap-4 mb-4">
+                            <label for="title" class="font-semibold w-24">כותרת משימה</label>
+                            <input pInputText id="title" [(ngModel)]="textHeader" class="flex-auto" autocomplete="off" [invalid]="isInvalid('textHeader')" />
+                        </div>
+                        <div class="flex items-center gap-4 mb-2">
+                            <label for="description" class="font-semibold w-24">תיאור המשימה</label>
+                            <p-editor id="description" [(ngModel)]="textDescription" [style]="{ height: '8rem' }" class="mr-9" [invalid]="isInvalid('textDescription')" />
+                        </div>
+                        <div class="flex items-center gap-4 mb-2">
+                            <label for="priority" class="font-semibold w-24">עדיפות</label>
+                            <p-select [options]="priority"
+                                      [(ngModel)]="selcetedPriority" 
+                                      optionLabel="name" 
+                                      placeholder="בחר עדיפות" 
+                                      class="w-full md:w-56"
+                                      [invalid]="isInvalid('selcetedPriority')" />
+                        </div>
+                        <div class="flex items-center gap-4 mb-2">
+                            <label for="dueDate"  class="font-semibold w-24">תאריך יעד</label>
+                            <p-datepicker [(ngModel)]="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" [invalid]="isInvalid('date')" />
+                        </div>
+                        <div class="flex items-center gap-4 mb-[100px] ">
+                            <label for="status" class="font-semibold w-24">סטטוס</label>
+                            <p-select [options]="status" 
+                                      [(ngModel)]="selectedStatus" 
+                                      optionLabel="name" 
+                                      placeholder="בחר סטטוס" 
+                                      class="w-full md:w-56"
+                                      [invalid]="isInvalid('selectedStatus')" />
+                        </div>
+                        <p [ngClass]="{ 'text-red-500 font-bold': isInvalid('textHeader') || isInvalid('textDescription') || isInvalid('date') || isInvalid('selcetedPriority') || isInvalid('selectedStatus') }">
+                                 ***כל השדות חובה
+                        </p>
+                        <ng-template #footer>
+                            <p-button label="ביטול" [text]="true" severity="secondary" (click)="visible = false" />
+                            <p-button label="שמירה" icon="pi pi-check"  (click)="onAdd()" />
+                        </ng-template>
+                    </p-dialog>
+                </span>
+            </span>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th>כותרת משימה</th>
+                <th>תיאור משימה</th>
+                <th>עדיפות</th>
+                <th>תאריך יעד</th>
+                <th>סטטוס</th>
+                <th>פעולות</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-task>
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.priority }}</td>
+                <td>{{ task.dueDate | date}}</td>
+                <td>{{ task.status }}</td>
+                <td>
+                    <span class="flex gap-4 justify-center">
+                        <p-button label="עריכה"/>
+                        <p-button severity="danger" label="מחיקה" icon="pi pi-trash" outlined  (click)="onDelete(task.id)" />
+                    </span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+ </p-card>
+</div>
+
+ 

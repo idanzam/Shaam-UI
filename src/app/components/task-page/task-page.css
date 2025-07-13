@@ -1,0 +1,11 @@
+
+
+
+:host ::ng-deep .p-dialog-header {
+    display: flex;
+    justify-content: center
+}
+
+:host ::ng-deep .p-datepicker-calendar-container {
+    z-index: 999999 !important;
+}
