@@ -16,8 +16,8 @@
                 direction="rtl"
         >
          <ng-template #caption>
-            <span class="flex justify-between ">
-                <span class="flex gap-2">
+            <span class="flex justify-between flex-wrap gap-2 ">
+                <span class="flex gap-2 flex-wrap">
                     <p-iconfield iconPosition="left" class="ml-auto" >
                         <p-inputicon>
                             <i class="pi pi-search"></i>
@@ -31,7 +31,7 @@
                               [raised]="true" 
                               rounded="true" />
                 </span>
-                <span class="flex gap-3">
+                <span class="flex gap-3 ">
                     <p-button icon="pi pi-plus" label="הוספת משימה" (click)="showDialog()" rounded="true" [raised]="true" severity="success" />
                     <p-button icon="pi pi-refresh" rounded raised label="רענן" (click)="refresh()" [raised]="true" />
                     <p-dialog [(visible)]="visible" 
